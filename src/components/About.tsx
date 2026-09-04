@@ -14,8 +14,8 @@ export function About() {
         </div>
 
         <figure className="about__figure reveal">
-          <Picture name={about.image} sizes="(min-width: 900px) 38vw, 86vw" />
-          <figcaption>{about.caption}</figcaption>
+          <Picture name="self-service-saladas" sizes="(min-width: 900px) 44vw, 86vw" />
+          <figcaption>Mesa de saladas pronta para o serviço</figcaption>
         </figure>
       </div>
     </section>
