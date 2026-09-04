@@ -27,7 +27,9 @@ jobs:
           ref: ${{ inputs.branch }}
 
       - name: Conferir ffmpeg
-        run: ffmpeg -version | head -1
+        run: |
+          ffmpeg -version | head -1
+          # a imagem do runner nem sempre traz o ffprobe; o ffmpeg basta.
 
       - name: Baixar, comprimir e gerar pôsteres
         run: |
@@ -48,9 +50,8 @@ jobs:
               exit 1
             fi
 
-            ffprobe -v error -select_streams v:0 \
-              -show_entries stream=width,height,duration,r_frame_rate \
-              -show_entries format=duration,size -of default=noprint_wrappers=1 "$bruto"
+            ls -la "$bruto"
+            ffmpeg -hide_banner -i "$bruto" 2>&1 | grep -E 'Duration|Stream #' || true
 
             # 720px no lado maior, sem áudio, faststart e no máximo 24 s.
             ffmpeg -y -loglevel error -i "$bruto" -t 24 \
