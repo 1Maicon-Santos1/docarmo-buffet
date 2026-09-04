@@ -1,0 +1,1 @@
+Posters (.jpg) dos vídeos, gerados com ffmpeg (veja o README).

@@ -1,0 +1,367 @@
+/* ==========================================================================
+   Buffet José do Carmo — fundação visual
+   Tokens, reset, tipografia e utilitários usados por todas as seções.
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Cormorant Garamond Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300 700;
+  src: url('/fonts/cormorant-garamond-latin.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
+    U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Manrope Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url('/fonts/manrope-latin.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
+    U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  /* Paleta */
+  --ivory: #f7f1e7;
+  --ivory-deep: #efe6d7;
+  --espresso: #241a14;
+  --espresso-soft: #43342a;
+  --terracotta: #b94f2f;
+  --terracotta-ink: #9e3f23; /* variação com contraste AA sobre marfim */
+  --saffron: #d7a441;
+  --saffron-deep: #a97b1f;
+  --olive: #526044;
+  --white: #ffffff;
+
+  --ink: var(--espresso);
+  --ink-soft: #5a4a3e;
+  --surface: var(--ivory);
+  --surface-raised: #fbf7f0;
+  --line: rgba(36, 26, 20, 0.14);
+  --line-strong: rgba(36, 26, 20, 0.26);
+
+  /* Tipografia */
+  --font-display: 'Cormorant Garamond Variable', 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Manrope Variable', Manrope, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+
+  --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.08rem);
+  --step-1: clamp(1.13rem, 1.05rem + 0.4vw, 1.3rem);
+  --step-2: clamp(1.35rem, 1.2rem + 0.8vw, 1.7rem);
+  --step-3: clamp(1.8rem, 1.5rem + 1.6vw, 2.6rem);
+  --step-4: clamp(2.3rem, 1.75rem + 2.6vw, 3.6rem);
+  --step-5: clamp(2.7rem, 1.9rem + 3.6vw, 4.4rem);
+
+  /* Espaço e formas */
+  --wrap: 1180px;
+  --gutter: clamp(1.15rem, 4vw, 2.5rem);
+  --section-y: clamp(3.5rem, 8vw, 6.5rem);
+  --radius-s: 6px;
+  --radius-m: 10px;
+  --radius-l: 16px;
+  --shadow-soft: 0 1px 2px rgba(36, 26, 20, 0.06), 0 10px 24px -18px rgba(36, 26, 20, 0.35);
+  --shadow-lift: 0 2px 6px rgba(36, 26, 20, 0.08), 0 22px 44px -28px rgba(36, 26, 20, 0.45);
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --header-h: 60px;
+  --dock-h: 0px;
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 12px);
+}
+
+body {
+  min-height: 100svh;
+  overflow-x: hidden;
+  background-color: var(--ivory);
+  /* Textura de papel/linho feita só com CSS: dois ruídos suaves e cruzados. */
+  background-image:
+    radial-gradient(circle at 18% 12%, rgba(215, 164, 65, 0.09), transparent 42%),
+    radial-gradient(circle at 88% 4%, rgba(185, 79, 47, 0.07), transparent 38%),
+    repeating-linear-gradient(90deg, rgba(36, 26, 20, 0.022) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(0deg, rgba(36, 26, 20, 0.02) 0 1px, transparent 1px 4px);
+  background-attachment: scroll;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  font-weight: 400;
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  padding-bottom: var(--dock-h);
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--step-5);
+}
+
+h2 {
+  font-size: var(--step-4);
+}
+
+h3 {
+  font-size: var(--step-2);
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--terracotta-ink);
+  text-underline-offset: 3px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--terracotta);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+::selection {
+  background: var(--saffron);
+  color: var(--espresso);
+}
+
+/* ---------- utilitários ---------- */
+
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--section-y);
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.9rem;
+  color: var(--terracotta-ink);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: '';
+  flex: 0 0 26px;
+  height: 1px;
+  background: var(--terracotta);
+}
+
+.lede {
+  max-width: 62ch;
+  color: var(--ink-soft);
+  font-size: var(--step-1);
+  line-height: 1.6;
+}
+
+.rule {
+  height: 1px;
+  border: 0;
+  background: var(--line);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 200;
+  padding: 0.7rem 1.1rem;
+  background: var(--espresso);
+  border-radius: 0 0 var(--radius-s) var(--radius-s);
+  color: var(--ivory);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transform: translate(-50%, -120%);
+  transition: transform 0.18s var(--ease);
+}
+
+.skip-link:focus-visible {
+  transform: translate(-50%, 0);
+}
+
+/* ---------- botões ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 48px;
+  padding: 0.78rem 1.4rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    transform 0.18s var(--ease),
+    background-color 0.18s var(--ease),
+    border-color 0.18s var(--ease),
+    color 0.18s var(--ease),
+    box-shadow 0.18s var(--ease);
+}
+
+.btn--primary {
+  background: var(--terracotta);
+  color: var(--white);
+  box-shadow: var(--shadow-soft);
+}
+
+.btn--primary:hover {
+  background: #a8452a;
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: var(--line-strong);
+  color: var(--espresso);
+}
+
+.btn--ghost:hover {
+  background: rgba(36, 26, 20, 0.05);
+  border-color: var(--espresso);
+}
+
+.btn--onDark {
+  background: rgba(247, 241, 231, 0.12);
+  border-color: rgba(247, 241, 231, 0.55);
+  color: var(--ivory);
+}
+
+.btn--onDark:hover {
+  background: rgba(247, 241, 231, 0.22);
+  border-color: var(--ivory);
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ---------- entrada suave dos blocos ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.6s var(--ease),
+    transform 0.6s var(--ease);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (min-width: 900px) {
+  :root {
+    --header-h: 76px;
+  }
+}
