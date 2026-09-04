@@ -162,7 +162,7 @@ scripts/sync-fonts.mjs     cópia das fontes (Cormorant Garamond e Manrope, OFL)
 public/                    fontes, imagens geradas, favicon e imagem social
 src/components/            seções da página
 src/components/quote/      orçamento guiado (modal, etapas, resumo)
-src/data/siteContent.ts    TODO o conteúdo e as perguntas
+src/data/siteContent.ts    todo o conteúdo e todas as perguntas
 src/lib/                   WhatsApp, validação, regras das etapas, storage, analytics
 src/styles/                design system (base, layout, seções, orçamento)
 e2e/                       testes de ponta a ponta
@@ -173,4 +173,4 @@ e2e/                       testes de ponta a ponta
 - **Lighthouse (mobile, 4G simulado):** Performance 97 · Acessibilidade 100 ·
   Boas práticas 100 · SEO 100 — LCP 2,5 s, CLS 0, TBT 10 ms.
 - **Lighthouse (desktop):** 100 · 100 · 100 · 100 — LCP 0,6 s.
-- **Testes:** 53 unitários (Vitest) e 36 de ponta a ponta (Playwright, celular e desktop).
+- **Testes:** 53 unitários (Vitest) e 40 de ponta a ponta (Playwright, celular e desktop).

@@ -218,6 +218,39 @@ test.describe('orçamento guiado', () => {
     );
   });
 
+  test('o botão "Copiar resumo" leva a mensagem para a área de transferência', async ({
+    page,
+    context,
+    browserName,
+  }) => {
+    test.skip(browserName !== 'chromium', 'permissão de área de transferência só no Chromium');
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+
+    await openWizard(page);
+    await fillFullFlow(page);
+    await page.getByRole('button', { name: 'Copiar resumo' }).click();
+    await expect(page.locator('.review__status')).toContainText('Resumo copiado!');
+
+    const copied = await page.evaluate(() => navigator.clipboard.readText());
+    expect(copied).toContain('Olá, Buffet José do Carmo!');
+    expect(copied).toContain('👥 Convidados: 80 adultos + 12 crianças = 92 pessoas');
+    expect(copied).toContain('Orçamento iniciado pelo site.');
+  });
+
+  test('o aviso após o clique deixa claro que falta tocar em Enviar', async ({ page }) => {
+    await openWizard(page);
+    await fillFullFlow(page);
+    const link = page.getByRole('link', { name: /Solicitar orçamento no WhatsApp/ });
+    await link.evaluate((element) => element.removeAttribute('target'));
+    await page.evaluate(() => {
+      document.addEventListener('click', (event) => event.preventDefault(), { capture: true });
+    });
+    await link.click();
+    await expect(page.locator('.review__status')).toContainText(
+      'Tudo pronto! Abrimos seu WhatsApp com as informações organizadas. Agora é só tocar em Enviar.',
+    );
+  });
+
   test('cards de evento abrem o orçamento com o tipo preenchido', async ({ page }) => {
     await page.goto('/');
     await page.getByRole('button', { name: /Montar orçamento para aniversários/ }).click();
