@@ -239,13 +239,28 @@ export interface VideoItem {
 /**
  * Vídeos dos eventos.
  *
- * A seção só aparece quando houver pelo menos um item aqui. Para publicar:
- * 1. coloque os arquivos .mp4 em `public/media/videos/`;
- * 2. gere o poster (`public/media/posters/<nome>.jpg`);
- * 3. descreva cada vídeo nesta lista.
- * O passo a passo com os comandos está no README.
+ * A seção só aparece quando há pelo menos um item aqui. Os arquivos ficam em
+ * `public/media/videos` e os pôsteres em `public/media/posters`; para preparar
+ * novos vídeos existe o fluxo `.github/workflows/preparar-videos.yml`, descrito
+ * no README.
  */
-export const videos: VideoItem[] = [];
+export const videos: VideoItem[] = [
+  {
+    src: '/media/videos/mesa-do-buffet.mp4',
+    poster: '/media/posters/mesa-do-buffet.jpg',
+    title: 'Da mesa de saladas aos pratos quentes',
+    description: 'Trecho de 24 segundos gravado em um evento atendido pelo buffet. Sem som.',
+    width: 720,
+    height: 1296,
+  },
+];
+
+export const videoSection = {
+  eyebrow: 'Em movimento',
+  title: 'A mesa antes de todo mundo se servir.',
+  lede: 'A câmera percorre a mesa inteira: a sequência de saladas, os acompanhamentos e a linha de pratos quentes. É o mesmo trabalho que aparece nas fotos, em movimento.',
+  note: 'O vídeo começa sem som e só toca quando você tocar no play.',
+} as const;
 
 export const process = {
   eyebrow: 'Como funciona',

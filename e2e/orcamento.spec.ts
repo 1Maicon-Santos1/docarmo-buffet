@@ -288,6 +288,26 @@ test.describe('acessibilidade e teclado', () => {
   });
 });
 
+test.describe('vídeo do evento', () => {
+  test('abre mudo, sem autoplay e só carrega os metadados', async ({ page }) => {
+    await page.goto('/');
+    const video = page.locator('#videos video');
+    await video.scrollIntoViewIfNeeded();
+    await expect(video).toBeVisible();
+
+    expect(await video.evaluate((element: HTMLVideoElement) => element.muted)).toBe(true);
+    expect(await video.evaluate((element: HTMLVideoElement) => element.playsInline)).toBe(true);
+    expect(await video.evaluate((element: HTMLVideoElement) => element.controls)).toBe(true);
+    expect(await video.evaluate((element: HTMLVideoElement) => element.autoplay)).toBe(false);
+    expect(await video.evaluate((element: HTMLVideoElement) => element.preload)).toBe('metadata');
+    expect(await video.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
+    expect(await video.getAttribute('poster')).toContain('/media/posters/');
+
+    const resposta = await page.request.get('/media/videos/mesa-do-buffet.mp4');
+    expect(resposta.status()).toBe(200);
+  });
+});
+
 test.describe('layout responsivo', () => {
   const widths = [320, 375, 390, 430, 768, 1440];
 

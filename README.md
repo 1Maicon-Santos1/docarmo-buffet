@@ -4,7 +4,7 @@ Landing page do Buffet José do Carmo (Aguaí–SP e região), com orçamento gu
 que termina abrindo o WhatsApp do buffet com todas as respostas organizadas.
 
 - **Stack:** React 19 + TypeScript + Vite, CSS próprio (sem framework de UI).
-- **Conteúdo:** só material real do buffet — 17 fotografias dos eventos e o
+- **Conteúdo:** só material real do buffet — fotografias e vídeo dos eventos e o
   cardápio de um evento já atendido.
 - **Sem back-end:** nada é enviado para servidores. As respostas ficam no
   `sessionStorage` do navegador até a pessoa tocar em “Solicitar orçamento no
@@ -111,40 +111,43 @@ deslocamento de layout durante o carregamento.
 
 ### Vídeos
 
-A seção de vídeos existe no código (`src/components/VideoShowcase.tsx`) e só
-aparece quando houver itens em `siteContent.videos` — hoje a lista está vazia
-porque os arquivos de vídeo não estavam disponíveis para publicação.
+O site publica **um** vídeo real: `public/media/videos/mesa-do-buffet.mp4`
+(24 s, 720×1296, sem áudio, ~4,3 MB), com pôster em
+`public/media/posters/mesa-do-buffet.jpg`. Ele começa mudo, exige toque no play,
+usa `preload="metadata"` (só o cabeçalho do arquivo é baixado antes do play) e
+pausa sozinho ao sair da tela.
 
-Para ativar:
+Os outros três vídeos do acervo não foram publicados porque mostram convidados
+com o rosto identificável — divulgá-los exigiria autorização de imagem dessas
+pessoas. Eles continuam disponíveis no Drive e podem ser preparados a qualquer
+momento pelo fluxo abaixo.
 
-1. Comprima o vídeo e gere o poster (ffmpeg):
+**Preparar novos vídeos.** Os originais são grandes demais para o ambiente de
+desenvolvimento, então o processamento roda no GitHub Actions:
 
-   ```bash
-   ffmpeg -i original.mp4 -vf "scale=-2:1080" -c:v libx264 -crf 26 -preset slow \
-          -an -movflags +faststart public/media/videos/mesa-do-evento.mp4
-   ffmpeg -i public/media/videos/mesa-do-evento.mp4 -ss 00:00:01 -frames:v 1 \
-          public/media/posters/mesa-do-evento.jpg
-   ```
-
-   (`-an` remove o áudio; o site nunca toca som automaticamente.)
-
-2. Descreva o vídeo em `src/data/siteContent.ts`:
+1. Edite a lista de arquivos em `.github/workflows/preparar-videos.yml`
+   (cada linha `processar <id-do-arquivo-no-drive> <nome>`).
+2. Rode o fluxo em *Actions › Preparar vídeos do buffet › Run workflow*.
+   Ele baixa, comprime (720 px no lado maior, sem áudio, `faststart`, 24 s),
+   gera pôster e uma folha de contato para curadoria, e comita tudo em
+   `media-source/videos/`.
+3. Escolha o que vai ao ar, copie para `public/media/videos` e
+   `public/media/posters` e descreva em `src/data/siteContent.ts`:
 
    ```ts
    export const videos: VideoItem[] = [
      {
-       src: '/media/videos/mesa-do-evento.mp4',
-       poster: '/media/posters/mesa-do-evento.jpg',
-       title: 'Mesa montada antes de abrir',
-       description: 'Gravado durante o serviço de um casamento.',
-       width: 1080,
-       height: 1920,
+       src: '/media/videos/mesa-do-buffet.mp4',
+       poster: '/media/posters/mesa-do-buffet.jpg',
+       title: 'Da mesa de saladas aos pratos quentes',
+       description: 'Trecho de 24 segundos gravado em um evento atendido pelo buffet. Sem som.',
+       width: 720,
+       height: 1296,
      },
    ];
    ```
 
-Os vídeos são carregados com `preload="metadata"`, começam mudos, exigem toque
-para tocar e pausam sozinhos ao sair da tela.
+Com a lista vazia, a seção de vídeos simplesmente não aparece.
 
 ---
 
@@ -181,4 +184,4 @@ e2e/                       testes de ponta a ponta
 - **Lighthouse (mobile, 4G simulado):** Performance 97 · Acessibilidade 100 ·
   Boas práticas 100 · SEO 100 — LCP 2,5 s, CLS 0, TBT 10 ms.
 - **Lighthouse (desktop):** 100 · 100 · 100 · 100 — LCP 0,6 s.
-- **Testes:** 53 unitários (Vitest) e 40 de ponta a ponta (Playwright, celular e desktop).
+- **Testes:** 53 unitários (Vitest) e 42 de ponta a ponta (Playwright, celular e desktop).

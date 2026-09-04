@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { videos } from '../data/siteContent';
+import { videoSection, videos } from '../data/siteContent';
 import { track } from '../lib/analytics';
 
 /**
@@ -35,11 +35,12 @@ export function VideoShowcase() {
 
   return (
     <section className="section videos" id="videos" aria-labelledby="videos-title">
-      <div className="wrap">
+      <div className="wrap videos__layout">
         <header className="section__head reveal">
-          <p className="eyebrow">Em movimento</p>
-          <h2 id="videos-title">A mesa no dia do evento.</h2>
-          <p className="lede">Trechos curtos gravados durante o serviço. O som começa desligado.</p>
+          <p className="eyebrow">{videoSection.eyebrow}</p>
+          <h2 id="videos-title">{videoSection.title}</h2>
+          <p className="lede">{videoSection.lede}</p>
+          <p className="videos__note">{videoSection.note}</p>
         </header>
 
         <div className="videos__grid" ref={containerRef}>
