@@ -2,12 +2,16 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 /**
- * Domínio final do site. Defina `SITE_URL` ao publicar para que as tags
- * Open Graph, o canonical, o robots.txt e o sitemap.xml usem URLs absolutas:
+ * Domínio final do site, usado nas tags Open Graph, no canonical, no robots.txt
+ * e no sitemap.xml.
+ *
+ * Ordem: `SITE_URL` (defina ao publicar em domínio próprio) e, se ela não
+ * existir, o domínio de produção que a Vercel injeta no build.
  *
  *   SITE_URL=https://seudominio.com.br npm run build
  */
-const siteUrl = (process.env.SITE_URL ?? '').replace(/\/+$/, '');
+const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+const siteUrl = (process.env.SITE_URL ?? (vercelUrl ? `https://${vercelUrl}` : '')).replace(/\/+$/, '');
 
 export default defineConfig({
   plugins: [

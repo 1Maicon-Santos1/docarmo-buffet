@@ -1,0 +1,93 @@
+name: Preparar vídeos do buffet
+
+# Os vídeos originais do buffet ficam no Google Drive e são grandes demais para
+# serem processados no ambiente de desenvolvimento. Este fluxo baixa os
+# arquivos, comprime com ffmpeg para uso em celular, gera pôster e uma folha de
+# contato (para curadoria) e comita o resultado em media-source/videos.
+#
+# Rodar manualmente em Actions › Preparar vídeos do buffet › Run workflow.
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: Branch onde o resultado será comitado
+        required: true
+        default: claude/buffet-jose-carmo-site-66sht5
+
+permissions:
+  contents: write
+
+jobs:
+  processar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch }}
+
+      - name: Conferir ffmpeg
+        run: ffmpeg -version | head -1
+
+      - name: Baixar, comprimir e gerar pôsteres
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/brutos media-source/videos
+
+          processar() {
+            local id="$1" nome="$2"
+            local bruto="/tmp/brutos/${nome}.mp4"
+
+            echo "::group::${nome}"
+            curl -sSL --fail --max-time 900 -o "$bruto" \
+              "https://drive.usercontent.google.com/download?id=${id}&export=download&confirm=t"
+
+            if ! file "$bruto" | grep -qi 'ISO Media\|MP4'; then
+              echo "Download não retornou um vídeo (arquivo não é público?)"
+              head -c 400 "$bruto"
+              exit 1
+            fi
+
+            ffprobe -v error -select_streams v:0 \
+              -show_entries stream=width,height,duration,r_frame_rate \
+              -show_entries format=duration,size -of default=noprint_wrappers=1 "$bruto"
+
+            # 720px no lado maior, sem áudio, faststart e no máximo 24 s.
+            ffmpeg -y -loglevel error -i "$bruto" -t 24 \
+              -vf "scale=w='if(gt(a,1),-2,720)':h='if(gt(a,1),720,-2)'" \
+              -c:v libx264 -crf 30 -preset slow -profile:v main -pix_fmt yuv420p \
+              -movflags +faststart -an \
+              "media-source/videos/${nome}.mp4"
+
+            ffmpeg -y -loglevel error -ss 1 -i "media-source/videos/${nome}.mp4" \
+              -frames:v 1 -q:v 4 "media-source/videos/${nome}-poster.jpg"
+
+            # Folha de contato: 12 quadros ao longo do vídeo, para curadoria.
+            ffmpeg -y -loglevel error -i "$bruto" \
+              -vf "select='not(mod(n\,90))',scale=240:-2,tile=4x3" -frames:v 1 \
+              "media-source/videos/${nome}-contato.jpg"
+
+            ls -la "media-source/videos/${nome}"*
+            echo "::endgroup::"
+          }
+
+          processar 1Du9662BtJhhbbuwYOM2LGfVQnwJmAyjC video-1
+          processar 1GSw8KYuZZd-u84rlYySCZFpyKSzJ3G20 video-2
+          processar 1SKwchUuUgyZRyacaFhaJZOnIq3HtvEDm video-3
+          processar 1S6qZBs8FuHKIZKsrlfLTQQlw4hJnCX0m video-4
+
+          du -sh media-source/videos
+          ls -la media-source/videos
+
+      - name: Comitar resultado
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add media-source/videos
+          if git diff --cached --quiet; then
+            echo "Nada mudou."
+            exit 0
+          fi
+          git commit -m "Comprime os vídeos reais do buffet para uso no site"
+          git push origin HEAD:${{ inputs.branch }}
