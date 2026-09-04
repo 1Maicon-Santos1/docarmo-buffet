@@ -1,0 +1,146 @@
+/* ==========================================================================
+   Hero mobile — contraste, hierarquia e conversão
+   Escopo restrito a telas menores para preservar o layout desktop.
+   ========================================================================== */
+
+@media (max-width: 899px) {
+  .hero {
+    min-height: calc(100svh - var(--header-h));
+    background: var(--espresso);
+  }
+
+  .hero__inner {
+    min-height: calc(100svh - var(--header-h));
+    justify-content: flex-end;
+    padding-top: clamp(4rem, 18svh, 7.5rem);
+    padding-bottom: clamp(1.35rem, 4.5vw, 2rem);
+  }
+
+  .hero__media img {
+    object-position: 50% 42%;
+    transform: scale(1.015);
+  }
+
+  .hero__scrim {
+    background:
+      radial-gradient(circle at 72% 26%, rgba(20, 13, 9, 0.02) 0 18%, rgba(20, 13, 9, 0.2) 48%, rgba(20, 13, 9, 0.52) 100%),
+      linear-gradient(
+        180deg,
+        rgba(20, 13, 9, 0.48) 0%,
+        rgba(20, 13, 9, 0.28) 22%,
+        rgba(20, 13, 9, 0.58) 48%,
+        rgba(20, 13, 9, 0.9) 73%,
+        rgba(20, 13, 9, 0.98) 100%
+      );
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+  }
+
+  .hero__eyebrow {
+    margin-bottom: 0.8rem;
+    padding: 0.42rem 0.72rem;
+    border-color: rgba(215, 164, 65, 0.78);
+    background: rgba(24, 16, 11, 0.6);
+    box-shadow: 0 8px 24px -18px rgba(0, 0, 0, 0.85);
+    color: #fffaf2;
+    font-size: clamp(0.66rem, 2.7vw, 0.76rem);
+    letter-spacing: 0.11em;
+    backdrop-filter: blur(5px);
+  }
+
+  .hero__headline {
+    max-width: 10.5ch;
+    color: #fffdf8;
+    font-size: clamp(2.72rem, 12vw, 4rem);
+    line-height: 0.94;
+    letter-spacing: -0.02em;
+    text-shadow:
+      0 2px 2px rgba(0, 0, 0, 0.3),
+      0 10px 32px rgba(0, 0, 0, 0.58);
+  }
+
+  .hero__sub {
+    max-width: 32ch;
+    margin-top: 1rem;
+    color: rgba(255, 253, 248, 0.96);
+    font-size: clamp(1rem, 4.25vw, 1.12rem);
+    font-weight: 520;
+    line-height: 1.52;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.75);
+  }
+
+  .hero__actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+    margin-top: 1.3rem;
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+    min-height: 52px;
+    min-width: 0;
+    font-size: 0.98rem;
+  }
+
+  .hero__actions .btn--primary {
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 14px 30px -18px rgba(0, 0, 0, 0.9),
+      0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  }
+
+  .hero__secondary {
+    border-color: rgba(255, 253, 248, 0.72);
+    background: rgba(20, 13, 9, 0.38);
+    color: #fffdf8;
+    backdrop-filter: blur(6px);
+  }
+
+  .hero__safety {
+    margin-top: 0.9rem;
+    color: rgba(255, 253, 248, 0.9);
+    font-size: 0.78rem;
+    line-height: 1.45;
+    text-align: center;
+    text-shadow: 0 1px 9px rgba(0, 0, 0, 0.75);
+  }
+
+  .hero__place {
+    gap: 0.35rem;
+    margin-top: 0.9rem;
+    padding-top: 0.9rem;
+    border-top-color: rgba(255, 253, 248, 0.24);
+    color: rgba(255, 253, 248, 0.92);
+    font-size: 0.82rem;
+    line-height: 1.45;
+    text-shadow: 0 1px 9px rgba(0, 0, 0, 0.75);
+  }
+
+  .hero__place a {
+    color: #f1bd58;
+    font-weight: 800;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero__inner {
+    padding-top: 3.75rem;
+  }
+
+  .hero__headline {
+    font-size: clamp(2.45rem, 11.5vw, 3.15rem);
+  }
+
+  .hero__sub {
+    font-size: 0.96rem;
+  }
+
+  .hero__actions .btn {
+    min-height: 49px;
+  }
+}
