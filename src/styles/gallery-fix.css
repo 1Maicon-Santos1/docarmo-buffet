@@ -1,0 +1,28 @@
+/* Ajustes pontuais da galeria para telas grandes.
+   Mantém o carrossel mobile intacto e corrige o alinhamento do mosaico no desktop. */
+
+.galeria__grid {
+  margin-inline: auto;
+}
+
+@media (min-width: 1200px) {
+  .galeria__grid {
+    grid-auto-rows: 9.5rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .galeria__item {
+    grid-column: span 1;
+    grid-row: span 2;
+  }
+
+  .galeria__item[data-size='alta'] {
+    grid-column: span 1;
+    grid-row: span 3;
+  }
+
+  .galeria__item[data-size='larga'] {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+}
