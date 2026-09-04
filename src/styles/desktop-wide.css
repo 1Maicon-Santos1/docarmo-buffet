@@ -1,0 +1,53 @@
+/* ==========================================================================
+   Aproveitamento de largura no desktop
+   Mantém o mobile/tablet intactos e usa melhor telas grandes sem alongar
+   excessivamente linhas de texto.
+   ========================================================================== */
+
+@media (min-width: 1200px) {
+  .wrap {
+    max-width: min(1660px, calc(100vw - 2rem));
+    padding-inline: clamp(2rem, 2.5vw, 3.25rem);
+  }
+
+  .section__head {
+    max-width: 52rem;
+  }
+
+  .hero__inner {
+    grid-template-columns: minmax(0, 1fr) minmax(480px, 0.82fr);
+    gap: clamp(3rem, 4.5vw, 6rem);
+  }
+
+  .manifesto__grid {
+    grid-template-columns: minmax(420px, 0.88fr) minmax(0, 1.12fr);
+    gap: clamp(3rem, 4.5vw, 5.5rem);
+  }
+
+  .events__grid {
+    gap: clamp(1rem, 1.35vw, 1.6rem);
+  }
+
+  .experience__grid {
+    gap: clamp(1.5rem, 1.8vw, 2.35rem);
+  }
+
+  .menu-card {
+    max-width: 1480px;
+    margin-inline: auto;
+  }
+
+  .videos__layout {
+    grid-template-columns: minmax(0, 1.1fr) minmax(340px, 0.7fr);
+    gap: clamp(3rem, 5vw, 6rem);
+  }
+
+  .videos__item {
+    max-width: 400px;
+  }
+
+  .faq__grid {
+    grid-template-columns: minmax(320px, 0.72fr) minmax(0, 1.28fr);
+    gap: clamp(3rem, 4vw, 5rem);
+  }
+}
