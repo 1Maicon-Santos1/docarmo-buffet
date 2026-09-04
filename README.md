@@ -37,11 +37,19 @@ Se o ambiente já tiver um Chromium instalado, aponte para ele:
 
 ### Publicação
 
-O site é 100% estático: publique o conteúdo de `dist/` em qualquer hospedagem
-(Vercel, Netlify, Cloudflare Pages, hospedagem tradicional…).
+O projeto está ligado à Vercel (projeto `buffet-jose-do-carmo`, framework Vite
+detectado automaticamente): cada push nesta branch gera um novo deploy.
 
-Defina `SITE_URL` no build para gerar URLs absolutas em Open Graph, canonical,
-`robots.txt` e `sitemap.xml`:
+- Site publicado: <https://buffet-jose-do-carmo.vercel.app>
+- Proteção de acesso desligada, para que qualquer pessoa consiga abrir o link.
+- Nenhum domínio próprio foi conectado ainda.
+
+O site é 100% estático, então também roda em qualquer outra hospedagem: basta
+publicar o conteúdo de `dist/`.
+
+As URLs absolutas de Open Graph, canonical, `robots.txt` e `sitemap.xml` saem do
+domínio de produção que a Vercel injeta no build. Ao conectar um domínio
+próprio, defina `SITE_URL` nas variáveis de ambiente do projeto:
 
 ```bash
 SITE_URL=https://seudominio.com.br npm run build

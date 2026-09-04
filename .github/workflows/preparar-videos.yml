@@ -26,10 +26,15 @@ jobs:
         with:
           ref: ${{ inputs.branch }}
 
-      - name: Conferir ffmpeg
+      - name: Instalar ffmpeg
         run: |
+          set -euo pipefail
+          if ! command -v ffmpeg > /dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
           ffmpeg -version | head -1
-          # a imagem do runner nem sempre traz o ffprobe; o ffmpeg basta.
+          ffprobe -version | head -1
 
       - name: Baixar, comprimir e gerar pôsteres
         run: |
@@ -51,7 +56,9 @@ jobs:
             fi
 
             ls -la "$bruto"
-            ffmpeg -hide_banner -i "$bruto" 2>&1 | grep -E 'Duration|Stream #' || true
+            ffprobe -v error -select_streams v:0 \
+              -show_entries stream=width,height,nb_frames \
+              -show_entries format=duration -of default=noprint_wrappers=1 "$bruto"
 
             # 720px no lado maior, sem áudio, faststart e no máximo 24 s.
             ffmpeg -y -loglevel error -i "$bruto" -t 24 \
