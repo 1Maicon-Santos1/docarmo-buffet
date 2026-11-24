@@ -1,0 +1,11 @@
+.ms-site-credit{box-sizing:border-box;width:100%;background:#241a14;color:#fff;border-top:1px solid #ffffff26;isolation:isolate;font-family:inherit;line-height:1.4}
+.ms-credit-inner{box-sizing:border-box;max-width:1280px;margin:0 auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.ms-credit-brand{display:inline-flex;align-items:center;gap:16px;min-width:0;min-height:44px;text-decoration:none;color:#fff;border-radius:4px}
+.ms-credit-label{font-size:11px;font-weight:400;color:#d4d4d8;letter-spacing:.025em;white-space:nowrap}
+.ms-credit-logo{display:block;width:200px;height:auto;max-width:100%;flex-shrink:0;filter:grayscale(1) invert(1) contrast(4);mix-blend-mode:screen}
+.ms-credit-action{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:22px;flex-shrink:0;min-height:44px;padding:10px 18px;border:1px solid #d7a441;border-radius:4px;font-size:12px;font-weight:500;line-height:1.4;color:#fff;text-decoration:none;transition:background .2s,border-color .2s}
+.ms-credit-action>span{font-size:20px;line-height:1}
+.ms-credit-action:hover{background:#ffffff16;border-color:#fff}
+.ms-site-credit a:focus-visible{outline:3px solid #fff;outline-offset:5px}
+@media(max-width:767px){.ms-credit-inner{flex-direction:column;justify-content:center;gap:18px;padding:24px 7% calc(100px + env(safe-area-inset-bottom,0px))}.ms-credit-brand{max-width:100%;flex-direction:column;gap:4px}.ms-credit-action{max-width:100%;padding:11px 20px}}
+@media(prefers-reduced-motion:reduce){.ms-credit-action{transition:none}}

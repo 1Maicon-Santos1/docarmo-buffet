@@ -1,8 +1,10 @@
+import { MsAgencyCredit } from "./MsAgencyCredit";
 import { footer, nav, site } from '../data/siteContent';
 import { Wordmark } from './Wordmark';
 
 export function Footer() {
   return (
+    <>
     <footer className="site-footer">
       <div className="wrap site-footer__grid">
         <div className="site-footer__brand">
@@ -41,5 +43,7 @@ export function Footer() {
         </p>
       </div>
     </footer>
+      <MsAgencyCredit />
+    </>
   );
 }
